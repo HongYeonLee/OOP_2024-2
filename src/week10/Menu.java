@@ -2,6 +2,9 @@ package week10;
 import java.util.Scanner;
 import java.util.Vector;
 
+import week9.FileReaderNotBufEx;
+import week9.FileWriterNotBufEx;
+
 class Menu {
 		Scanner key;
 	
@@ -15,7 +18,9 @@ class Menu {
 			System.out.println("3. Modify (특정 인덱스의 피자를 수정)");
 			System.out.println("4. Delete (특정 인덱스의 피자를 삭제)");
 			System.out.println("5. List All (모든 피자를 출력)");
-			System.out.println("6. Exit");
+			System.out.println("6. File Write (문자 스트림)");
+			System.out.println("7. File Read (문자 스트림");
+			System.out.println("8. Exit");
 			System.out.println();
 			System.out.print("Choose an option : ");	
 			int menu = key.nextInt();
@@ -48,6 +53,12 @@ class Menu {
 						listAllPizza(key);
 						break;
 					case 6:
+						fileWrite();
+						break;
+					case 7:
+						fileRead();
+						break;
+					case 8:
 						System.out.println(user);
 						System.out.println("24년 이화 정원 마음껏 누리세요^^");
 						return;
@@ -59,6 +70,32 @@ class Menu {
 			}		
 		}
 		
+		private void fileWrite() {
+			// TODO Auto-generated method stub
+			FileWriterClass ewha1 = new FileWriterClass();
+			String info = "";
+			for (int i = 0; i < pizzaVector.size(); i++) {
+				info += pizzaVector.get(i).getName() + "," + pizzaVector.get(i).getCalories() + "," + pizzaVector.get(i).getToppings() + "\n";
+				
+			}
+			ewha1.writer(info);
+		}
+		
+		private void fileRead() {
+			// TODO Auto-generated method stub
+			FileReadClass ewha2 = new FileReadClass();
+			Vector<String> v = ewha2.reader();
+			for (int i = 0; i < v.size(); i+=3) {
+				String name = v.get(i);
+				int calories = Integer.parseInt(v.get(i + 1));
+				String toppings = v.get(i+2);
+				
+				Pizza pizza = new Pizza(name, calories, toppings);
+	            pizzaVector.add(pizza);
+			}
+			
+		}
+
 		private void addPizza(Scanner key) {
 			// TODO Auto-generated method stub
 			System.out.print("피자 이름: ");
@@ -95,19 +132,25 @@ class Menu {
 			System.out.print("수정할 index: ");
 			int index = key.nextInt();
 			key.nextLine(); //엔터먹어가기
-			Pizza p = pizzaVector.get(index);
-			System.out.print("new name (현재: " + p.getName() +"): ");
-			String name = key.nextLine();
-			System.out.print("new calories (현재: " + p.getCalories() + "): ");
-			int calories = key.nextInt();
-			key.nextLine(); //엔터 먹어가기
-			System.out.print("new toppings (현재: " + p.getToppings() + "): ");
-			String toppings = key.nextLine();
-			
-			p.setName(name);
-			p.setCalories(calories);
-			p.setTopping(toppings);
-			System.out.println("Pizza 수정: " + p.getPizzaInfo());
+			if (index >= 0 && index < pizzaVector.size()) {
+				Pizza p = pizzaVector.get(index);
+				System.out.print("new name (현재: " + p.getName() +"): ");
+				String name = key.nextLine();
+				System.out.print("new calories (현재: " + p.getCalories() + "): ");
+				int calories = key.nextInt();
+				key.nextLine(); //엔터 먹어가기
+				System.out.print("new toppings (현재: " + p.getToppings() + "): ");
+				String toppings = key.nextLine();
+				
+				p.setName(name);
+				p.setCalories(calories);
+				p.setTopping(toppings);
+				System.out.println("Pizza 수정: " + p.getPizzaInfo());
+			}
+			else {
+				System.out.println("잘못된 index 입니다");
+			}
+;
 		}
 		
 		private void deletePizza(Scanner key) {
@@ -134,4 +177,6 @@ class Menu {
 			}
 			
 		}
+		
+		
 }

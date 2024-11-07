@@ -1,11 +1,8 @@
 package week9;
-
-
-
-	import java.io.FileWriter;
-	import java.io.IOException;
-	import java.util.Scanner;
-	import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+import java.io.File;
 
 	public class FileWriterNotBufEx {
 
@@ -30,7 +27,7 @@ package week9;
 	        String content = "";
 	  
 	        while(true) {
-	        	System.out.print("파일 내용 입력 : ");
+	        	System.out.print("파일 내용 입력 (quit): ");
 	        	String input = sc.nextLine();
 	        	if(input.equals("quit")) {
 	        		break;
