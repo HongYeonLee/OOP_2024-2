@@ -1,6 +1,7 @@
 package week10;
 import java.util.Scanner;
 import java.util.Vector;
+import java.util.Iterator;
 
 import week9.FileReaderNotBufEx;
 import week9.FileWriterNotBufEx;
@@ -20,7 +21,8 @@ class Menu {
 			System.out.println("5. List All (모든 피자를 출력)");
 			System.out.println("6. File Write (문자 스트림)");
 			System.out.println("7. File Read (문자 스트림");
-			System.out.println("8. Exit");
+			System.out.println("8. Search Pizza (피자 정보로 검색)");
+			System.out.println("9. Exit");
 			System.out.println();
 			System.out.print("Choose an option : ");	
 			int menu = key.nextInt();
@@ -59,6 +61,9 @@ class Menu {
 						fileRead();
 						break;
 					case 8:
+						searchPizza();
+						break;
+					case 9:
 						System.out.println(user);
 						System.out.println("24년 이화 정원 마음껏 누리세요^^");
 						return;
@@ -176,6 +181,54 @@ class Menu {
 				System.out.println(i + ": " + pizzaVector.get(i).getPizzaInfo());
 			}
 			
+		}
+		
+		private void searchPizza() {
+			//벡터와 이터레이터 연결
+			Iterator<Pizza> it = pizzaVector.iterator();
+			String name;
+			int cal;
+			System.out.print("1. 피자  2. 칼로리  3. 토핑 : ");
+			int num = key.nextInt();
+			key.nextLine();
+			
+			switch(num) {
+			case 1:
+				System.out.print("검색할 피자 이름: ");
+				name = key.nextLine();
+				
+				while (it.hasNext()) {
+					Pizza ahn = it.next();
+					if(ahn.getName().equals(name)) {
+						System.out.println(ahn.getPizzaInfo());
+					}
+				}
+				
+				break;
+			case 2:
+				System.out.println("검색할 칼로리 : ");
+				cal = key.nextInt();
+				while(it.hasNext()) {
+					Pizza ahn = it.next();
+					if(ahn.getCalories() == cal) {
+						System.out.println(ahn.getPizzaInfo());
+						break;
+					}
+				}
+				break;
+			case 3:
+				System.out.print("검색할 토핑 이름: ");
+				name = key.nextLine();
+				
+				while (it.hasNext()) {
+					Pizza ahn = it.next();
+					if(ahn.getToppings().equals(name)) {
+						System.out.println(ahn.getPizzaInfo());
+						break;
+					}
+				}
+				break;
+			}
 		}
 		
 		
