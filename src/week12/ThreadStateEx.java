@@ -17,7 +17,7 @@ public class ThreadStateEx {
 		
 		//스레드 생성
 		for (int i = 0; i < threads.length; i++) {
-			threads[i] = new Thread(new Task(i + 1, (i + 1) * 500));
+			threads[i] = new Thread(new Task(i + 1, (i + 1) * 5000));
 		}
 		
 		//스레드 상태 출력 (NEW 상태)
