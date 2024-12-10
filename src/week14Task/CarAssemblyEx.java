@@ -21,10 +21,11 @@ public class CarAssemblyEx {
 		Thread bodyProducer = new Thread(new Producer(factory, "Body", carNum*1, 2000));
 		
 		//조립 스레드
-		Thread assembler = new Thread(factory::assembleCar);
+		Thread assembler = new Thread(factory::assembleCar); //CarFactory 클래스의 assembleCar 메소드를 실행하는 스레드 생성 
 		
 		//판매 스레드
-		Thread carSeller = new Thread(new Consumer(factory, carNum, 3000));
+//		Thread carSeller = new Thread(new Consumer(factory, carNum, 3000));
+		Thread carSeller = new Thread(factory::sellCar);
 		
 		//스레드 실행
 		wheelProducer.start();

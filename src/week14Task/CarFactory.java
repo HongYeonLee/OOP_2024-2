@@ -32,14 +32,17 @@ class CarFactory {
 		// TODO Auto-generated method stub
 		synchronized (lock) {
 			try {
-				if(carCnt > 0) {
-					System.out.println("영업점에서 자동차를 판매합니다. 현재 자동차 판매 수 (" + sellCarCnt + "개)");
-					carCnt--;
-				}
-				else {
-					System.out.println("생산된 자동차가 없어 영업점에서 자동차를 팔 수 없습니다.");
-					System.out.println("-----판매 wait()");
-					lock.wait();
+				while(true) {
+					Thread.sleep(3000); //3초에 한번씩 판매
+					if(carCnt > 0) {
+						System.out.println("영업점에서 자동차를 판매합니다. 현재 자동차 판매 수 (" + sellCarCnt + "개)");
+						carCnt--;
+					}
+					else {
+						System.out.println("생산된 자동차가 없어 영업점에서 자동차를 팔 수 없습니다.");
+						System.out.println("-----판매 wait()");
+						lock.wait();
+					}
 				}
 			}catch(InterruptedException e) {
 				System.out.println("판매 스레드가 중단되었습니다.");
@@ -47,6 +50,7 @@ class CarFactory {
 		}
 	}
 	
+	//얘가 run()메소드처럼 작동함
 	public void assembleCar() {
 		synchronized(lock) {
 			try {
@@ -63,6 +67,7 @@ class CarFactory {
 						lock.notifyAll(); //판매 스레드에 알림
 					}
 					else {
+						System.out.println("생산된 부품이 없어 자동차를 조립할 수 없습니다.");
 						System.out.println("-----조립 wait()");
 						lock.wait(); //대기
 					}
